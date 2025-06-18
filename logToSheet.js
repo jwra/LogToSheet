@@ -13,12 +13,15 @@ class LogToSheet {
   }
 
   flush() {
+    if(this.logs.length === 0) {
+      return;
+    }
     if(this.sheet == null) {
       this.sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(this.sheetName);
     }
     let lastRow = this.sheet.getLastRow() + 1;
+    this.sheet.insertRowsAfter(lastRow - 1, this.logs.length);
     let range = this.sheet.getRange(lastRow, 1, this.logs.length, this.logs[0].length);
-    this.sheet.insertRowsAfter(lastRow, this.logs.length);
     range.setValues(this.logs);
     this.logs = [];
   }
