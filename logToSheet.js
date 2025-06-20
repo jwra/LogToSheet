@@ -6,6 +6,7 @@
  * @param {Object} options - Configuration options.
  * @param {string} options.sheet - Target sheet name.
  * @param {string} [options.timeZone="UTC"] - Time zone for timestamp.
+ * @param {number} [options.maxBuffer=500] - Max logs to buffer before auto flush.
  */
 class LogToSheet {
   constructor(options) {
@@ -15,10 +16,18 @@ class LogToSheet {
 
     this.sheetName = options.sheet;
     this.timeZone = options.timeZone || "UTC";
+
+    this.maxBuffer = 500;
+    if (options.maxBuffer !== undefined) {
+      if (!Number.isInteger(options.maxBuffer) || options.maxBuffer <= 0) {
+        throw new Error("The 'maxBuffer' option must be a positive integer.");
+      }
+      this.maxBuffer = options.maxBuffer;
+    }
+
     this.spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     this.sheet = this.spreadsheet.getSheetByName(this.sheetName);
     this.logs = [];
-    this.maxBuffer = 500;
   }
 
   /**
