@@ -22,7 +22,7 @@ invoked when more than 500 entries have been queued.
 log.flush();
 ```
 ## Output Format
-LogToSheet will output 2 columns to the sheet. The first column is a date time corresponding to the time of the log in ```yyyy-MM-dd HH:mm:ss``` format (timezone is UTC). The second column is the log.
+LogToSheet will output 2 columns to the sheet. The first column is a date time corresponding to the time of the log in ```yyyy-MM-dd HH:mm:ss``` format using the configured `timeZone` (defaults to UTC). The second column is the log.
 ## Example
 ```
 const log = new LogToSheet({
