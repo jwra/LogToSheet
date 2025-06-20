@@ -42,9 +42,11 @@ class LogToSheet {
     if (this.sheet == null) {
       this.sheet = this.spreadsheet.insertSheet(this.sheetName);
     }
-    var lastRow = this.sheet.getLastRow() + 1;
-    this.sheet.insertRowsAfter(lastRow, this.logs.length);
-    var range = this.sheet.getRange(lastRow, 1, this.logs.length, this.logs[0].length);
+    var lastRow = this.sheet.getLastRow();
+    if (lastRow + this.logs.length > this.sheet.getMaxRows()) {
+      this.sheet.insertRowsAfter(lastRow, this.logs.length);
+    }
+    var range = this.sheet.getRange(lastRow + 1, 1, this.logs.length, this.logs[0].length);
     range.setValues(this.logs);
     this.logs = [];
   }
