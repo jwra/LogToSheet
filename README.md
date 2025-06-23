@@ -3,12 +3,16 @@ Lightweight in-sheet logging for Google Sheets. Intended to provide spreadsheet 
 
 ## Usage
 Initialize a new instance of `LogToSheet`. The constructor accepts an options object. At a minimum you must provide the sheet name via the `sheet` option.
+You can also optionally override the timestamp time zone with the `timeZone` option.
+Optionally pass a `spreadsheetId` to log to a specific spreadsheet instead of the active one.
 You can also optionally override the timestamp time zone with the `timeZone` option or configure how many logs are buffered before they are automatically flushed with the `maxBuffer` option.
 ```
 const log = new LogToSheet({
   sheet: "Logs",
   // optional: timezone used for timestamps
   timeZone: "America/Los_Angeles",
+  // optional: log to a specific spreadsheet
+  spreadsheetId: "your-spreadsheet-id"
   // optional: maximum number of entries to buffer before flush
   maxBuffer: 1000
 });
@@ -29,7 +33,8 @@ LogToSheet will output 2 columns to the sheet. The first column is a date time c
 ```
 const log = new LogToSheet({
     sheet: "Logs",
-    timeZone: "America/Los_Angeles"
+    timeZone: "America/Los_Angeles",
+    spreadsheetId: "your-spreadsheet-id"
 });
 
 for(let i = 1; i <= 100; i++) {
