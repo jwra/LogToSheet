@@ -30,7 +30,6 @@ class LogToSheet {
       this.maxBuffer = options.maxBuffer;
     }
 
-    this.spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     this.sheet = this.spreadsheet.getSheetByName(this.sheetName);
     this.logs = [];
   }
