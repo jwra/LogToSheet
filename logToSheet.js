@@ -6,6 +6,7 @@
  * @param {Object} options - Configuration options.
  * @param {string} options.sheet - Target sheet name.
  * @param {string} [options.timeZone="UTC"] - Time zone for timestamp.
+ * @param {string} [options.spreadsheetId] - Optional spreadsheet ID to log to.
  */
 class LogToSheet {
   constructor(options) {
@@ -15,7 +16,11 @@ class LogToSheet {
 
     this.sheetName = options.sheet;
     this.timeZone = options.timeZone || "UTC";
-    this.spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    if (options.spreadsheetId) {
+      this.spreadsheet = SpreadsheetApp.openById(options.spreadsheetId);
+    } else {
+      this.spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    }
     this.sheet = this.spreadsheet.getSheetByName(this.sheetName);
     this.logs = [];
     this.maxBuffer = 500;
