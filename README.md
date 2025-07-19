@@ -17,9 +17,14 @@ const log = new LogToSheet({
   maxBuffer: 1000
 });
 ```
-Insert new logs by calling the  ```insert``` method with 1 argument which is the value to log. 
+Insert new logs by calling the  ```insert``` method with 1 argument which is the value to log.  
+You can also log with standard levels using `info`, `debug`, `warn`, and `error`.
 ```
 log.insert("My first log");
+log.info("App started");
+log.debug("Debug details");
+log.warn("Something looks off");
+log.error("Something failed");
 ```
 Output the logs to the sheet by calling `flush`. `flush` will attempt to create
 the output sheet if it does not already exist. `flush` is also automatically
@@ -28,7 +33,7 @@ invoked when more than the configured `maxBuffer` value (default 500) entries ha
 log.flush();
 ```
 ## Output Format
-LogToSheet will output 2 columns to the sheet. The first column is a date time corresponding to the time of the log in ```yyyy-MM-dd HH:mm:ss``` format using the configured `timeZone` (defaults to UTC). The second column is the log.
+Log entries written with the level methods contain 3 columns: the timestamp, the level, and the message. Entries written with `insert()` continue to produce 2 columns (timestamp and message).
 ## Example
 ```
 const log = new LogToSheet({
@@ -38,9 +43,10 @@ const log = new LogToSheet({
 });
 
 for(let i = 1; i <= 100; i++) {
-  log.insert(`Demo ${i}`);
+  log.debug(`Processing ${i}`);
 }
 
+log.info('All done');
 log.flush();
 ```
 <img width="230" alt="Screenshot 2023-01-21 134153" src="https://user-images.githubusercontent.com/49938659/213867317-d355350c-ea0e-4b2f-94bc-1e7ae6a32dc7.png">
