@@ -35,19 +35,6 @@ class LogToSheet {
   }
 
   /**
-   * Queues a message for logging.
-   * @param {*} log - The message to log.
-   */
-  insert(log) {
-    if (log == null) return;
-    var timestamp = Utilities.formatDate(new Date(), this.timeZone, "yyyy-MM-dd HH:mm:ss");
-    this.logs.push([timestamp, log]);
-    if (this.logs.length >= this.maxBuffer) {
-      this.flush();
-    }
-  }
-
-  /**
    * Writes queued logs to the sheet.
    */
   flush() {
